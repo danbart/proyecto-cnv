@@ -1,14 +1,14 @@
 # Usa la imagen oficial de Node
-FROM node:18
+FROM node:20
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app
 
-# Copia los archivos package.json y package-lock.json
-COPY package*.json ./
+# Copia archivos de Yarn y dependencias
+COPY package.json yarn.lock ./
 
-# Instala las dependencias
-RUN npm install
+# Instala las dependencias dentro del contenedor
+RUN yarn install
 
 # Copia el resto del código de la app
 COPY . .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Comando por defecto para iniciar en modo desarrollo
-CMD ["npm", "run", "start:dev"]
+CMD ["yarn", "start:dev"]
