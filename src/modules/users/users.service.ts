@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -13,6 +13,10 @@ export class UsersService {
     ) { }
 
     async create(createUserDto: CreateUserDto) {
+        const existing = await this.userRepo.findOne({ where: { email: createUserDto.email } });
+        if (existing) {
+            throw new ConflictException('El email ya está registrado');
+        }
         const user = this.userRepo.create(createUserDto);
         return this.userRepo.save(user);
     }

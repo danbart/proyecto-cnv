@@ -33,6 +33,11 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules # evitar conflictos
+    develop:
+      watch:
+        - path: .
+          target: /usr/src/app
+          action: sync
 
 volumes:
   pgdata:
