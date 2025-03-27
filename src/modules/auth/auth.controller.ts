@@ -1,8 +1,8 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from './dto';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { LoginDto, RefreshTokenDto, RegisterDto } from './dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -24,7 +24,7 @@ export class AuthController {
 
     @Post('refresh')
     @ApiOperation({ summary: 'Refresca el access token' })
-    async refresh(@Body() body: { userId: string; refreshToken: string }) {
+    async refresh(@Body() body: RefreshTokenDto) {
         return this.authService.refresh(body.userId, body.refreshToken);
     }
 
