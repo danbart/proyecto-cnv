@@ -5,94 +5,108 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Sistema de Gestión de Convocatorias - Backend
 
-## Description
+Este es el backend del Sistema de Gestión de Convocatorias para la Escuela Judicial, desarrollado con NestJS, PostgreSQL, Docker y autenticación JWT. El sistema permite gestión de usuarios, autenticación segura, control de roles, inscripciones y manejo de convocatorias.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🤖 Tecnologías Utilizadas
 
-```bash
-$ yarn install
+- **[NestJS](https://nestjs.com/)** - Framework de Node.js para backend modular.
+- **[TypeORM](https://typeorm.io/)** - ORM para integración con PostgreSQL.
+- **[PostgreSQL](https://www.postgresql.org/)** - Base de datos relacional.
+- **[Docker](https://www.docker.com/)** - Contenerización del backend y la base de datos.
+- **[JWT](https://jwt.io/)** - Autenticación con access y refresh tokens.
+- **[Swagger](https://swagger.io/)** - Documentación interactiva de la API REST.
+- **[class-transformer](https://github.com/typestack/class-transformer)** - Serialización segura de datos.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+src/
+├── modules/
+│   ├── auth/              # Módulo de autenticación (JWT, refresh, roles)
+│   ├── users/             # Gestión de usuarios
+│   ├── convocatorias/     # Lógica de convocatorias (próximo)
+├── common/
+│   ├── guards/            # Guards personalizados (roles, JWT)
+│   ├── interceptors/      # Interceptor de auditoría (createdBy, updatedBy)
+│   ├── decorators/        # Decoradores como @Roles()
+.env.template              # Variables de entorno de ejemplo
+Dockerfile                # Imagen del backend
 ```
 
-## Compile and run the project
+---
+
+## ⚖️ Variables de Entorno
+
+Copia el archivo `.env.template` y renómbralo a `.env`. Luego, actualiza los valores necesarios:
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+cp .env.template .env
 ```
 
-## Run tests
+### Contenido del `.env.template`
+```env
+DB_HOST=postgres
+DB_PORT=5432
+DB_USER=admin
+DB_PASS=admin
+DB_NAME=convocatorias_db
+JWT_SECRET=super_secreto
+JWT_EXPIRES=15m
+JWT_REFRESH_EXPIRES=7d
+```
 
+---
+
+## 🚀 Ejecución del Proyecto
+
+### 1. Clonar el repositorio
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+git clone https://github.com/tuusuario/proyecto-cnv.git
+cd proyecto-cnv
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### 2. Configurar entorno
 ```bash
-$ yarn install -g mau
-$ mau deploy
+cp .env.template .env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Levantar con Docker
+```bash
+docker compose up --build
+```
 
-## Resources
+Accede a la API en: [http://localhost:3000/api](http://localhost:3000/api)
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 🔍 Documentación Swagger
 
-## Support
+Disponible automáticamente en:
+```
+http://localhost:3000/api
+```
+Puedes probar los endpoints, loguearte con JWT, ver estructuras y validar respuestas.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## 📃 Consideraciones
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- `synchronize: true` está habilitado solo para desarrollo. Para producción se deben usar migraciones.
+- Las contraseñas y tokens están encriptados y protegidos.
+- Se utiliza soft delete con `@DeleteDateColumn`.
+- Se incluye auditoría automática con `createdBy`, `updatedBy`, `createdAt`, `updatedAt`.
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 👤 Autor
+
+- **Danilo Solórzano**  
+  Desarrollador Backend  
+  <!-- [LinkedIn](https://www.linkedin.com/in/tuusuario) *(opcional)* -->
+
