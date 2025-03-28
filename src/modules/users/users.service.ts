@@ -24,7 +24,7 @@ export class UsersService {
 
     async findAll() {
         const users = await this.userRepo.find({ where: { deletedAt: IsNull() } });
-        return users.map(user => instanceToPlain(user));
+        return users;//.map(user => instanceToPlain(user));
     }
 
     async findOne(id: string) {

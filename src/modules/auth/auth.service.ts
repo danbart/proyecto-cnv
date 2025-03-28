@@ -13,7 +13,10 @@ export class AuthService {
     ) { }
 
     async validateUser(email: string, password: string): Promise<User> {
-        const user = await this.userRepo.findOne({ where: { email } });
+        const user = await this.userRepo.findOne({
+            where: { email },
+            select: ['email', 'password', 'id']
+        });
         if (!user || !(await bcrypt.compare(password, user.password))) {
             throw new UnauthorizedException('Credenciales inválidas');
         }
@@ -21,7 +24,7 @@ export class AuthService {
     }
 
     async generateTokens(user: User) {
-        const payload = { sub: user.id, email: user.email, role: user.role };
+        const payload = { sub: user.id, email: user.email, role: user.roles };
         const accessToken = this.jwtService.sign(payload, {
             expiresIn: process.env.JWT_EXPIRES || '15m',
         });

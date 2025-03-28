@@ -10,17 +10,17 @@ export class User {
     @Column({ unique: true })
     email: string;
 
-    @Column()
+    @Column({ select: false })
     @Exclude()
     password: string;
 
     @Column()
     fullName: string;
 
-    @Column({ default: 'user' }) // admin, user, superadmin
-    role: string;
+    @Column('text', { array: true, default: ['user'] }) // admin, user, superadmin
+    roles: string[];
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, select: false })
     @Exclude()
     refreshToken?: string;
 
