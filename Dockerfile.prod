@@ -13,6 +13,9 @@ RUN npm ci --omit=dev
 # Copia el resto del código de la app
 COPY . .
 
+# Instalar dependencias
+RUN npm install
+
 # Compila la aplicación de NestJS
 RUN npm run build
 
