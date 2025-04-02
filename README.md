@@ -98,7 +98,7 @@ JWT_REFRESH_EXPIRES=7d
 
 2. Levantar con Docker Compose para producción
    ```bash
-   docker compose -f docker-compose.prod.yml up --build -d
+   docker compose -f docker-compose.prod.yaml up --build -d
    ```
 
 3. Confirmar que los servicios están corriendo
