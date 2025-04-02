@@ -36,12 +36,13 @@ src/
 │   ├── interceptors/      # Interceptor de auditoría (createdBy, updatedBy)
 │   ├── decorators/        # Decoradores como @Roles()
 .env.template              # Variables de entorno de ejemplo
-Dockerfile                # Imagen del backend
+Dockerfile.dev             # Imagen para desarrollo
+Dockerfile.prod            # Imagen para producción
 ```
 
 ---
 
-## ⚖️ Variables de Entorno
+## 📓 Variables de Entorno
 
 Copia el archivo `.env.template` y renómbralo a `.env`. Luego, actualiza los valores necesarios:
 
@@ -65,33 +66,48 @@ JWT_REFRESH_EXPIRES=7d
 
 ## 🚀 Ejecución del Proyecto
 
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/tuusuario/proyecto-cnv.git
-cd proyecto-cnv
-```
+### 🔄 Desarrollo
 
-### 2. Configurar entorno
-```bash
-cp .env.template .env
-```
+1. Clonar el repositorio
+   ```bash
+   git clone https://github.com/tuusuario/convocatorias-backend.git
+   cd convocatorias-backend
+   ```
 
-### 3. Levantar con Docker
-```bash
-docker compose up --build
-```
+2. Configurar el entorno
+   ```bash
+   cp .env.template .env
+   ```
 
-Accede a la API en: [http://localhost:3000/api](http://localhost:3000/api)
+3. Levantar con Docker Compose para desarrollo
+   ```bash
+   docker compose -f docker-compose.dev.yaml up --build
+   ```
+
+4. Acceder a la API:
+   - Swagger: [http://localhost:3000/api](http://localhost:3000/api)
 
 ---
 
-## 🔍 Documentación Swagger
+### 🔄 Producción
 
-Disponible automáticamente en:
-```
-http://localhost:3000/api
-```
-Puedes probar los endpoints, loguearte con JWT, ver estructuras y validar respuestas.
+1. Configurar el entorno
+   ```bash
+   cp .env.template .env
+   ```
+
+2. Levantar con Docker Compose para producción
+   ```bash
+   docker compose -f docker-compose.prod.yml up --build -d
+   ```
+
+3. Confirmar que los servicios están corriendo
+   ```bash
+   docker compose -f docker-compose.prod.yaml ps
+   ```
+
+4. Acceder a la API:
+   - Swagger: [http://produccion/api](http://<tu-ip-de-servidor>/api)
 
 ---
 
@@ -107,6 +123,6 @@ Puedes probar los endpoints, loguearte con JWT, ver estructuras y validar respue
 ## 👤 Autor
 
 - **Danilo Solórzano**  
-  Desarrollador Backend  
+  Desarrollador Backend
   <!-- [LinkedIn](https://www.linkedin.com/in/tuusuario) *(opcional)* -->
 
