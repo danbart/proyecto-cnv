@@ -10,7 +10,8 @@ services:
     ports:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      #- pgdata:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql # 👈 ejecuta el script
 
   backend:

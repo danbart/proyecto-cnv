@@ -10,7 +10,6 @@ export class LoginDto {
 
     @ApiProperty({ example: '123456' })
     @IsString()
-    @IsEmail()
     @MinLength(6)
     @MaxLength(50)
     @Matches(

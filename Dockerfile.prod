@@ -1,0 +1,24 @@
+# Usa la imagen oficial de Node
+FROM node:20
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
+
+# Copia el package.json y el package-lock.json
+COPY package.json package-lock.json ./
+
+# Instala solo las dependencias de producción
+RUN npm ci --omit=dev
+
+# Copia el resto del código de la app
+COPY . .
+
+# Compila la aplicación de NestJS
+RUN npm run build
+
+# Expone el puerto que usa NestJS
+EXPOSE 3000
+
+# Comando por defecto para producción
+CMD ["npm", "run", "start"]
+
