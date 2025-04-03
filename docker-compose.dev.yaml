@@ -15,7 +15,9 @@ services:
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql # 👈 ejecuta el script
 
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     container_name: nest-backend
     command: yarn start:dev
     ports:
