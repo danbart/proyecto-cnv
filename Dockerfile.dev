@@ -8,7 +8,8 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 
 # Instala las dependencias dentro del contenedor
-RUN yarn install
+#RUN yarn install -f
+RUN npm install -f --legacy-peer-deps
 
 # Copia el resto del código de la app
 COPY . .
