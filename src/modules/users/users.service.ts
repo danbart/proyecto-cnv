@@ -19,7 +19,9 @@ export class UsersService {
             throw new ConflictException('El email ya está registrado');
         }
         const user = this.userRepo.create(createUserDto);
-        return this.userRepo.save(user);
+        this.userRepo.save(user);
+        const { password, ...userData } = user;
+        return userData;
     }
 
     async findAll() {
