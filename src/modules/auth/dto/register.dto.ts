@@ -34,5 +34,5 @@ export class RegisterDto {
   @ArrayUnique()
   @IsString({ each: true })
   @IsIn(['user', 'admin', 'editor', 'superadmin'], { each: true })
-  role?: string[];
+  roles?: string[];
 }
