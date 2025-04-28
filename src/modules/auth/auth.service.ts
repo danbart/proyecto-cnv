@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
+import { RegisterDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,8 @@ export class AuthService {
     }
 
     async generateTokens(user: User) {
-        const payload = { sub: user.id, email: user.email, role: user.roles };
+        //email: user.email, role: user.roles 
+        const payload = { sub: user.id };
         const accessToken = this.jwtService.sign(payload, {
             expiresIn: process.env.JWT_EXPIRES || '15m',
         });
@@ -50,12 +52,14 @@ export class AuthService {
         return this.generateTokens(user);
     }
 
-    async register(data) {
+    async register(data: RegisterDto) {
         const existing = await this.userRepo.findOne({ where: { email: data.email } });
         if (existing) {
             throw new ConflictException('El email ya está registrado');
         }
         const user = this.userRepo.create(data);
-        return this.userRepo.save(user);
+        this.userRepo.save(user);
+        const { password, ...userData } = user;
+        return userData;
     }
 }

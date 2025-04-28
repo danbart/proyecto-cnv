@@ -34,7 +34,7 @@ export class ConvocatoriasController {
     // CREATE
     // ────────────────────────────────────────────────────────────
     @Post()
-    @Roles('encargado', 'admin')
+    @Roles('superadmin', 'admin')
     @ApiOperation({ summary: 'Crea una nueva convocatoria en estado BORRADOR' })
     @ApiBody({ type: CreateConvocatoriaDto })
     @ApiCreatedResponse({ type: Convocatoria, description: 'Convocatoria creada' })
@@ -69,7 +69,7 @@ export class ConvocatoriasController {
     // UPDATE
     // ────────────────────────────────────────────────────────────
     @Patch(':id')
-    @Roles('encargado', 'admin')
+    @Roles('superadmin', 'admin')
     @ApiParam({ name: 'id' })
     @ApiOperation({ summary: 'Actualiza una convocatoria (BORRADOR o EN_MODIFICACION)' })
     @ApiBody({ type: UpdateConvocatoriaDto })
@@ -82,7 +82,7 @@ export class ConvocatoriasController {
     // APPROVE
     // ────────────────────────────────────────────────────────────
     @Patch(':id/approve')
-    @Roles('jefe', 'admin')
+    @Roles('superadmin', 'admin')
     @ApiParam({ name: 'id' })
     @ApiOperation({ summary: 'Aprueba la convocatoria' })
     @ApiOkResponse({ type: Convocatoria, description: 'Convocatoria aprobada' })
@@ -94,7 +94,7 @@ export class ConvocatoriasController {
     // DELETE (soft)
     // ────────────────────────────────────────────────────────────
     @Delete(':id')
-    @Roles('encargado', 'admin')
+    @Roles('superadmin', 'admin')
     @ApiParam({ name: 'id' })
     @ApiOperation({ summary: 'Elimina lógicamente la convocatoria' })
     @ApiNoContentResponse({ description: 'Convocatoria eliminada' })
