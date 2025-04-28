@@ -5,10 +5,12 @@ import {
     DeleteDateColumn,
     Entity,
     ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { ConvocatoriaLog } from './convocatoriaLog.entity';
 
 export enum ConvocatoriaEstado {
     BORRADOR = 'borrador',
@@ -44,7 +46,7 @@ export class Convocatoria {
     fechas: Array<{ fechaInicio: Date; fechaFin: Date }>;
 
     // --- Flujo / estado ---
-    @Column({ type: 'enum', enum: ConvocatoriaEstado, default: ConvocatoriaEstado.BORRADOR })
+    @Column({ type: 'enum', enum: ConvocatoriaEstado, enumName: 'convocatoria_estado_enum', default: ConvocatoriaEstado.BORRADOR })
     estado: ConvocatoriaEstado;
 
     // Cupos
@@ -68,4 +70,8 @@ export class Convocatoria {
 
     @DeleteDateColumn()
     deletedAt?: Date;
+
+    @OneToMany(() => ConvocatoriaLog, (l) => l.convocatoria, { cascade: true })
+    logs: ConvocatoriaLog[];
+
 }

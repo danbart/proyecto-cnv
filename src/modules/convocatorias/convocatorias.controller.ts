@@ -101,4 +101,5 @@ export class ConvocatoriasController {
     remove(@Param('id') id: string) {
         return this.svc.remove(id);
     }
+
 }
