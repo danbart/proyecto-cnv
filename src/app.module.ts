@@ -4,8 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
-import { UsersModule } from './modules/users/users.module';
 import { ConvocatoriasModule } from './modules/convocatorias/convocatorias.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
