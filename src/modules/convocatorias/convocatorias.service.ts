@@ -41,10 +41,10 @@ export class ConvocatoriasService {
     }
 
     // Ejemplo de método de cambio de estado/flujo
-    async aprobar(id: string, currentUser: User) {
-        const conv = await this.findOne(id);
-        conv.estado = ConvocatoriaEstado.APROBADA;
-        conv.updatedBy = currentUser;
-        return this.repo.save(conv);
-    }
+    // async aprobar(id: string, currentUser: User) {
+    //     const conv = await this.findOne(id);
+    //     conv.estado = ConvocatoriaEstado.APROBADA;
+    //     conv.updatedBy = currentUser;
+    //     return this.repo.save(conv);
+    // }
 }

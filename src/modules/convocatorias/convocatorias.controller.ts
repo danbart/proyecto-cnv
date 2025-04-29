@@ -82,14 +82,14 @@ export class ConvocatoriasController {
     // ────────────────────────────────────────────────────────────
     // APPROVE
     // ────────────────────────────────────────────────────────────
-    @Patch(':id/approve')
-    @Roles(TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
-    @ApiParam({ name: 'id' })
-    @ApiOperation({ summary: 'Aprueba la convocatoria' })
-    @ApiOkResponse({ type: Convocatoria, description: 'Convocatoria aprobada' })
-    approve(@Param('id') id: string, @Req() req) {
-        return this.svc.aprobar(id, req.user);
-    }
+    // @Patch(':id/approve')
+    // @Roles(TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
+    // @ApiParam({ name: 'id' })
+    // @ApiOperation({ summary: 'Aprueba la convocatoria' })
+    // @ApiOkResponse({ type: Convocatoria, description: 'Convocatoria aprobada' })
+    // approve(@Param('id') id: string, @Req() req) {
+    //     return this.svc.aprobar(id, req.user);
+    // }
 
     // ────────────────────────────────────────────────────────────
     // DELETE (soft)
