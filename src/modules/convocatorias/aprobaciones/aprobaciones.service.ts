@@ -5,19 +5,20 @@ import { Repository } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria-dto';
 import { Convocatoria } from '../entities/convocatoria.entity';
+import { ConvocatoriaLog } from '../entities/convocatoriaLog.entity';
 
 @Injectable()
 export class AprobacionesService {
-    logRepo: any;
 
     constructor(
         @InjectRepository(Convocatoria)
         private readonly conv: Repository<Convocatoria>,
+        @InjectRepository(ConvocatoriaLog)
+        private readonly logRepo: Repository<ConvocatoriaLog>,
     ) { }
     async enviarRevision(id: string, user: User) {
         const c = await this.conv.findOne({
             where: { id },
-            relations: ['createdBy'],      // si necesitas validar autor
             withDeleted: false,            // true si permites reactivar borrados
         });
         if (!c) throw new NotFoundException('Convocatoria no encontrada');
@@ -30,7 +31,6 @@ export class AprobacionesService {
     async revisar(id: string, dto: RevisarConvocatoriaDto, jefe: User) {
         const c = await this.conv.findOne({
             where: { id },
-            relations: ['createdBy'],      // si necesitas validar autor
             withDeleted: false,            // true si permites reactivar borrados
         });
         if (!c) throw new NotFoundException('Convocatoria no encontrada');
@@ -42,7 +42,6 @@ export class AprobacionesService {
     async publicar(id: string, dto: PublicarDto, pub: User) {
         const c = await this.conv.findOne({
             where: { id },
-            relations: ['createdBy'],      // si necesitas validar autor
             withDeleted: false,            // true si permites reactivar borrados
         });
         if (!c) throw new NotFoundException('Convocatoria no encontrada');
