@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConvocatoriaEstado } from 'src/common/enums/convocatoria-estado.enum';
 import { Repository } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria-dto';
-import { Convocatoria, ConvocatoriaEstado } from '../entities/convocatoria.entity';
+import { Convocatoria } from '../entities/convocatoria.entity';
 
 @Injectable()
 export class AprobacionesService {
@@ -14,7 +15,12 @@ export class AprobacionesService {
         private readonly conv: Repository<Convocatoria>,
     ) { }
     async enviarRevision(id: string, user: User) {
-        const c = await this.conv.findOneByOrFail({ id });
+        const c = await this.conv.findOne({
+            where: { id },
+            relations: ['createdBy'],      // si necesitas validar autor
+            withDeleted: false,            // true si permites reactivar borrados
+        });
+        if (!c) throw new NotFoundException('Convocatoria no encontrada');
         this.ensure(c, ConvocatoriaEstado.BORRADOR);
 
         return this.transition(c, user,
@@ -22,14 +28,24 @@ export class AprobacionesService {
     }
 
     async revisar(id: string, dto: RevisarConvocatoriaDto, jefe: User) {
-        const c = await this.conv.findOneByOrFail({ id });
+        const c = await this.conv.findOne({
+            where: { id },
+            relations: ['createdBy'],      // si necesitas validar autor
+            withDeleted: false,            // true si permites reactivar borrados
+        });
+        if (!c) throw new NotFoundException('Convocatoria no encontrada');
         this.ensure(c, ConvocatoriaEstado.EN_REVISION);
 
         return this.transition(c, jefe, dto.nuevoEstado, dto.comentario);
     }
 
     async publicar(id: string, dto: PublicarDto, pub: User) {
-        const c = await this.conv.findOneByOrFail({ id });
+        const c = await this.conv.findOne({
+            where: { id },
+            relations: ['createdBy'],      // si necesitas validar autor
+            withDeleted: false,            // true si permites reactivar borrados
+        });
+        if (!c) throw new NotFoundException('Convocatoria no encontrada');
         this.ensure(c, ConvocatoriaEstado.APROBADA);
 
         return this.transition(c, pub, ConvocatoriaEstado.PUBLICADA, dto.nota);

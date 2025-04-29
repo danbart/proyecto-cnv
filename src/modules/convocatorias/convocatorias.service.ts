@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConvocatoriaEstado } from 'src/common/enums/convocatoria-estado.enum';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import { CreateConvocatoriaDto } from './dto/create-convocatoria.dto';
 import { UpdateConvocatoriaDto } from './dto/update-convocatoria.dto';
-import { Convocatoria, ConvocatoriaEstado } from './entities/convocatoria.entity';
+import { Convocatoria } from './entities/convocatoria.entity';
 
 @Injectable()
 export class ConvocatoriasService {

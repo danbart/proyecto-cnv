@@ -1,6 +1,7 @@
+import { ConvocatoriaEstado } from "src/common/enums/convocatoria-estado.enum";
 import { User } from "src/modules/users/entities/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Convocatoria, ConvocatoriaEstado } from "./convocatoria.entity";
+import { Convocatoria } from "./convocatoria.entity";
 
 @Entity({ name: 'convocatoria_logs' })
 export class ConvocatoriaLog {
@@ -10,10 +11,10 @@ export class ConvocatoriaLog {
     @ManyToOne(() => Convocatoria, (c) => c.logs, { onDelete: 'CASCADE' })
     convocatoria: Convocatoria;
 
-    @Column({ type: 'enum', enum: ConvocatoriaEstado, enumName: 'convocatoria_estado_enum', })
+    @Column({ type: 'enum', enum: ConvocatoriaEstado, enumName: 'convocatoria_estado_enum_1', })
     de: ConvocatoriaEstado;
 
-    @Column({ type: 'enum', enum: ConvocatoriaEstado, enumName: 'convocatoria_estado_enum', })
+    @Column({ type: 'enum', enum: ConvocatoriaEstado, enumName: 'convocatoria_estado_enum_1', })
     a: ConvocatoriaEstado;
 
     @ManyToOne(() => User)

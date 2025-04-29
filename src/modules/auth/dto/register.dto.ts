@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ArrayNotEmpty, ArrayUnique, IsArray, IsEmail, IsIn, IsOptional, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { TypeRoles } from "src/common/utils/consts";
 
 export class RegisterDto {
 
@@ -26,13 +27,13 @@ export class RegisterDto {
     example: ['user'],
     isArray: true,
     required: false,
-    enum: ['user', 'admin', 'editor', 'superadmin'],
+    enum: [TypeRoles],
   })
   @IsOptional()
   @IsArray()
   @ArrayNotEmpty()
   @ArrayUnique()
   @IsString({ each: true })
-  @IsIn(['user', 'admin', 'editor', 'superadmin'], { each: true })
+  @IsIn([TypeRoles], { each: true })
   roles?: string[];
 }

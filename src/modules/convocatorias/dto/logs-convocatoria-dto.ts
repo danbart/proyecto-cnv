@@ -1,4 +1,3 @@
-// src/modules/convocatorias/dto/revisar-convocatoria.dto.ts
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
@@ -7,7 +6,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
-import { ConvocatoriaEstado } from '../entities/convocatoria.entity';
+import { ConvocatoriaEstado } from 'src/common/enums/convocatoria-estado.enum';
 
 export class RevisarConvocatoriaDto {
   @ApiProperty({

@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { ConvocatoriaEstado } from 'src/common/enums/convocatoria-estado.enum';
 import {
     Column,
     CreateDateColumn,
@@ -11,16 +12,6 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { ConvocatoriaLog } from './convocatoriaLog.entity';
-
-export enum ConvocatoriaEstado {
-    BORRADOR = 'borrador',
-    EN_REVISION = 'en_revision',
-    EN_MODIFICACION = 'en_modificacion',
-    APROBADA = 'aprobada',
-    EN_PUBLICACION = 'en_publicacion',
-    PUBLICADA = 'publicada',
-    CANCELADA = 'cancelada',
-}
 
 @Entity({ name: 'convocatorias' })
 export class Convocatoria {
@@ -46,7 +37,7 @@ export class Convocatoria {
     fechas: Array<{ fechaInicio: Date; fechaFin: Date }>;
 
     // --- Flujo / estado ---
-    @Column({ type: 'enum', enum: ConvocatoriaEstado, enumName: 'convocatoria_estado_enum', default: ConvocatoriaEstado.BORRADOR })
+    @Column({ type: 'enum', enum: ConvocatoriaEstado, default: ConvocatoriaEstado.BORRADOR })
     estado: ConvocatoriaEstado;
 
     // Cupos

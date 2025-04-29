@@ -3,6 +3,7 @@ import { ApiBadRequestResponse, ApiBearerAuth, ApiForbiddenResponse, ApiNotFound
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
+import { TypeRoles } from 'src/common/utils/consts';
 import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria-dto';
 import { Convocatoria } from '../entities/convocatoria.entity';
 import { AprobacionesService } from './aprobaciones.service';
@@ -16,7 +17,7 @@ export class AprobacionesController {
 
     // ---------- Enviar a revisión ----------
     @Patch('enviar')
-    @Roles('editor', 'superadmin')
+    @Roles(TypeRoles.EDITOR, TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiOperation({ summary: 'Enviar convocatoria a revisión (BORRADOR → EN_REVISION)' })
     @ApiParam({ name: 'id', description: 'UUID de la convocatoria' })
     @ApiOkResponse({ type: Convocatoria })
@@ -29,7 +30,7 @@ export class AprobacionesController {
 
     // ---------- Revisión (admin) ----------
     @Patch('revisar')
-    @Roles('admin', 'superadmin')
+    @Roles(TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiOperation({
         summary: 'Revisar convocatoria (EN_REVISION → APROBADA | EN_MODIFICACION)',
     })
@@ -47,7 +48,7 @@ export class AprobacionesController {
 
     // ---------- Publicar ----------
     @Patch('publicar')
-    @Roles('editor', 'admin', 'superadmin')
+    @Roles(TypeRoles.EDITOR, TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiOperation({ summary: 'Publicar convocatoria (APROBADA → PUBLICADA)' })
     @ApiParam({ name: 'id', description: 'UUID de la convocatoria' })
     @ApiOkResponse({ type: Convocatoria })

@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { TypeRoles } from 'src/common/utils/consts';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -15,7 +16,7 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Post()
-    @Roles('admin', 'superAdmin')
+    @Roles(TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Crear un nuevo usuario' })
     create(@Body() createUserDto: CreateUserDto) {
@@ -23,7 +24,7 @@ export class UsersController {
     }
 
     @Get()
-    @Roles('admin', 'superAdmin', 'user')
+    @Roles(TypeRoles.USER, TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Listar todos los usuarios' })
     findAll() {
@@ -31,7 +32,7 @@ export class UsersController {
     }
 
     @Get(':id')
-    @Roles('admin', 'superAdmin', 'user')
+    @Roles(TypeRoles.USER, TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Buscar un usuario por ID' })
     findOne(@Param('id') id: string) {
@@ -39,7 +40,7 @@ export class UsersController {
     }
 
     @Put(':id')
-    @Roles('admin', 'superAdmin', 'user')
+    @Roles(TypeRoles.USER, TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Actualizar un usuario por ID' })
     update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -47,7 +48,7 @@ export class UsersController {
     }
 
     @Delete(':id')
-    @Roles('admin', 'superAdmin')
+    @Roles(TypeRoles.ADMIN, TypeRoles.SUPERADMIN)
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Eliminar un usuario por ID' })
     remove(@Param('id') id: string) {
