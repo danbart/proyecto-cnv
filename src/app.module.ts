@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SharedModule } from './common/shared.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConvocatoriasModule } from './modules/convocatorias/convocatorias.module';
 import { UsersModule } from './modules/users/users.module';
@@ -23,6 +24,7 @@ import { UsersModule } from './modules/users/users.module';
     UsersModule,
     AuthModule,
     ConvocatoriasModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

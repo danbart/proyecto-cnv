@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsInt, IsNotEmpty, IsString, Min, ValidateNested } from 'class-validator';
 
-class RangoFechaDto {
+export class RangoFechaDto {
     @IsNotEmpty()
     @Type(() => Date)
     fechaInicio: Date;

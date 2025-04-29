@@ -3,9 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ConvocatoriaEstado } from 'src/common/enums/convocatoria-estado.enum';
 import { Repository } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria-dto';
-import { Convocatoria } from '../entities/convocatoria.entity';
-import { ConvocatoriaLog } from '../entities/convocatoriaLog.entity';
+import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria.dto';
+import { Convocatoria, ConvocatoriaLog } from '../entities';
 
 @Injectable()
 export class AprobacionesService {

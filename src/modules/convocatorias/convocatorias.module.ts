@@ -1,18 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SharedModule } from 'src/common/shared.module';
 import { AprobacionesController } from './aprobaciones/aprobaciones.controller';
 import { AprobacionesService } from './aprobaciones/aprobaciones.service';
+import { ComunicacionController } from './comunicacion/comunicacion.controller';
+import { ComunicacionService } from './comunicacion/comunicacion.service';
 import { ConvocatoriasController } from './convocatorias.controller';
 import { ConvocatoriasService } from './convocatorias.service';
-import { Convocatoria } from './entities/convocatoria.entity';
-import { ConvocatoriaLog } from './entities/convocatoriaLog.entity';
-import { Inscripcion } from './entities/inscripcion.entity';
+import { Comunicacion, ComunicacionLog, Convocatoria, ConvocatoriaLog, Inscripcion } from './entities';
 import { InscripcionesController } from './inscripciones/inscripciones.controller';
 import { InscripcionesService } from './inscripciones/inscripciones.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Convocatoria, ConvocatoriaLog, Inscripcion])],
-  controllers: [ConvocatoriasController, AprobacionesController, InscripcionesController],
-  providers: [ConvocatoriasService, AprobacionesService, InscripcionesService],
+  imports: [
+    TypeOrmModule.forFeature([Convocatoria, ConvocatoriaLog, Inscripcion, Comunicacion, ComunicacionLog]),
+    SharedModule],
+  controllers: [ConvocatoriasController, AprobacionesController, InscripcionesController, ComunicacionController],
+  providers: [ConvocatoriasService, AprobacionesService, InscripcionesService, ComunicacionService],
 })
 export class ConvocatoriasModule { }

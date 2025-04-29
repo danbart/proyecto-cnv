@@ -4,7 +4,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { TypeRoles } from 'src/common/utils/consts';
-import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria-dto';
+import { PublicarDto, RevisarConvocatoriaDto } from '../dto/logs-convocatoria.dto';
 import { Convocatoria } from '../entities/convocatoria.entity';
 import { AprobacionesService } from './aprobaciones.service';
 
