@@ -28,16 +28,21 @@ Este es el backend del Sistema de Gestión de Convocatorias para la Escuela Judi
 ```
 src/
 ├── modules/
-│   ├── auth/              # Módulo de autenticación (JWT, refresh, roles)
-│   ├── users/             # Gestión de usuarios
-│   ├── convocatorias/     # Lógica de convocatorias (próximo)
+│   ├── auth/               # JWT, refresh‑token, registro
+│   ├── users/              # CRUD de usuarios, perfiles
+│   ├── convocatorias/      # CRUD + flujo de estados
+│   ├── comunicacion/       # Envío de correos, QR, bitácora
+│   └── admin/              # Roles jerárquicos, coordinación, métricas
 ├── common/
-│   ├── guards/            # Guards personalizados (roles, JWT)
-│   ├── interceptors/      # Interceptor de auditoría (createdBy, updatedBy)
-│   ├── decorators/        # Decoradores como @Roles()
-.env.template              # Variables de entorno de ejemplo
-Dockerfile.dev             # Imagen para desarrollo
-Dockerfile.prod            # Imagen para producción
+│   ├── guards/             # JwtAuthGuard, RolesGuard, HierarchyGuard
+│   ├── interceptors/       # Auditoría (createdBy, updatedBy)
+│   ├── decorators/         # @Roles(), @CurrentUser()
+│   └── services/           # SesMailerService, QrGeneratorService
+.env.template               # Variables de entorno de ejemplo
+Dockerfile.dev              # Imagen desarrollo (Node 18 + ts-node)
+Dockerfile.prod             # Imagen producción  (Node 18 + dist)
+docker-compose.dev.yaml     # Hot‑reload con volumes watch
+docker-compose.prod.yaml    # Contenedores optimizados, sin nodemon
 ```
 
 ---
@@ -52,14 +57,27 @@ cp .env.template .env
 
 ### Contenido del `.env.template`
 ```env
+# --- App ---
+APP_PUBLIC_URL=https://midominio.gob.gt
+
+# --- BBDD ---
 DB_HOST=postgres
 DB_PORT=5432
 DB_USER=admin
 DB_PASS=admin
 DB_NAME=convocatorias_db
+
+# --- JWT ---
 JWT_SECRET=super_secreto
 JWT_EXPIRES=15m
 JWT_REFRESH_EXPIRES=7d
+
+# --- AWS SES ---
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=XXXX
+AWS_SECRET_ACCESS_KEY=XXXX
+MAIL_FROM="Convocatorias <convocatorias@midominio.gob.gt>"
+
 ```
 
 ---
@@ -70,7 +88,7 @@ JWT_REFRESH_EXPIRES=7d
 
 1. Clonar el repositorio
    ```bash
-   git clone https://github.com/tuusuario/convocatorias-backend.git
+   git clone https://github.com/danbart/convocatorias-backend.git
    cd convocatorias-backend
    ```
 
@@ -111,6 +129,19 @@ JWT_REFRESH_EXPIRES=7d
 
 ---
 
+## 🛣️ Mapa de endpoints (Swagger cubre detalles)
+
+| Método | Ruta                                | Descripción           | Roles                        |
+| ------ | ----------------------------------- | --------------------- | ---------------------------- |
+| `POST` | `/auth/login`                       | Login y refresh‑token | público                      |
+| `GET`  | `/convocatorias`                    | Listar convocatorias  | *varios*                     |
+| `POST` | `/convocatorias`                    | Crear (Borrador)      | `superadmin`, `admin`        |
+| `POST` | `/convocatorias/:id/enviar`         | Publicar & notificar  | `publicador`                 |
+| `GET`  | `/convocatorias/:id/comunicaciones` | Historial de envíos   | `coordinacion`               |
+| `GET`  | `/admin/roles`                      | CRUD roles            | `superadmin`                 |
+| `GET`  | `/admin/metricas`                   | Dashboard métricas    | `coordinacion`, `superadmin` |
+
+
 ## 📃 Consideraciones
 
 - `synchronize: true` está habilitado solo para desarrollo. Para producción se deben usar migraciones.
@@ -124,5 +155,4 @@ JWT_REFRESH_EXPIRES=7d
 
 - **Danilo Solórzano**  
   Desarrollador Backend
-  <!-- [LinkedIn](https://www.linkedin.com/in/tuusuario) *(opcional)* -->
 
