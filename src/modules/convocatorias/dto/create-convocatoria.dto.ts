@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsInt, IsNotEmpty, IsString, Min, ValidateNested } from 'class-validator';
+import { IsArray, IsInt, IsNotEmpty, IsString, IsUUID, Min, ValidateNested } from 'class-validator';
 
 export class RangoFechaDto {
     @IsNotEmpty()
@@ -24,15 +24,15 @@ export class CreateConvocatoriaDto {
     @IsNotEmpty()
     descripcion: string;
 
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    tipo: string;
+    // @ApiProperty()
+    // @IsString()
+    // @IsNotEmpty()
+    // tipo: string;
 
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    modalidad: string;
+    // @ApiProperty()
+    // @IsString()
+    // @IsNotEmpty()
+    // modalidad: string;
 
     @ApiProperty()
     @IsArray()
@@ -44,6 +44,14 @@ export class CreateConvocatoriaDto {
     @IsInt()
     @Min(1)
     cupo: number;
+
+    @ApiProperty({ example: 'ab1c‑d2e3‑…', description: 'ID de catálogo TIPO_CONVOCATORIA' })
+    @IsUUID()
+    tipoId: string;
+
+    @ApiProperty({ example: 'cd4e‑f5g6‑…', description: 'ID de catálogo MODALIDAD' })
+    @IsUUID()
+    modalidadId: string;
 
     // estado no se expone: se crea en BORRADOR
 }

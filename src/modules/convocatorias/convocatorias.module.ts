@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SharedModule } from 'src/common/shared.module';
+import { CatalogoModule } from '../catalogo/catalogo.module';
 import { AprobacionesController } from './aprobaciones/aprobaciones.controller';
 import { AprobacionesService } from './aprobaciones/aprobaciones.service';
 import { ComunicacionController } from './comunicacion/comunicacion.controller';
@@ -14,8 +15,18 @@ import { InscripcionesService } from './inscripciones/inscripciones.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Convocatoria, ConvocatoriaLog, Inscripcion, Comunicacion, ComunicacionLog]),
-    SharedModule],
-  controllers: [ConvocatoriasController, AprobacionesController, InscripcionesController, ComunicacionController],
-  providers: [ConvocatoriasService, AprobacionesService, InscripcionesService, ComunicacionService],
+    SharedModule,
+    CatalogoModule],
+  controllers: [
+    ConvocatoriasController,
+    AprobacionesController,
+    InscripcionesController,
+    ComunicacionController],
+  providers: [
+    ConvocatoriasService,
+    AprobacionesService,
+    InscripcionesService,
+    ComunicacionService,
+  ],
 })
 export class ConvocatoriasModule { }

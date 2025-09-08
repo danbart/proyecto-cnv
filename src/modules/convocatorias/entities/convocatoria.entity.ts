@@ -1,10 +1,12 @@
 import { Exclude } from 'class-transformer';
 import { ConvocatoriaEstado } from 'src/common/enums/convocatoria-estado.enum';
+import { Catalogo } from 'src/modules/catalogo/entities/catalogo.entity';
 import {
     Column,
     CreateDateColumn,
     DeleteDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -25,11 +27,11 @@ export class Convocatoria {
     @Column({ type: 'text' })
     descripcion: string;
 
-    @Column({ name: 'tipo', length: 25 }) // PFJYA | EXTRAORDINARIO | ...
-    tipo: string;
+    // @Column({ name: 'tipo', length: 25 }) // PFJYA | EXTRAORDINARIO | ...
+    // tipo: string;
 
-    @Column({ name: 'modalidad', length: 20 }) // presencial | virtual | hibrida | semi
-    modalidad: string;
+    // @Column({ name: 'modalidad', length: 20 }) // presencial | virtual | hibrida | semi
+    // modalidad: string;
 
     // múltiples fechas ‑ guardamos como JSON para primera versión
     // [{ "fechaInicio": ..., "fechaFin": ... }]
@@ -64,5 +66,16 @@ export class Convocatoria {
 
     @OneToMany(() => ConvocatoriaLog, (l) => l.convocatoria, { cascade: true })
     logs: ConvocatoriaLog[];
+
+    @ManyToOne(() => Catalogo, { eager: true })
+    @JoinColumn({ name: 'tipoId' })
+    tipo: Catalogo;                    // Catalog.tipo = TIPO_CONVOCATORIA
+    @Column() tipoId: string;         // FK
+
+    @ManyToOne(() => Catalogo, { eager: true })
+    @JoinColumn({ name: 'modalidadId' })
+    modalidad: Catalogo;               // Catalog.tipo = MODALIDAD
+    @Column()
+    modalidadId: string;
 
 }

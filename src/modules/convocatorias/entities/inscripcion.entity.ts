@@ -1,8 +1,10 @@
 
+import { Catalogo } from 'src/modules/catalogo/entities/catalogo.entity';
 import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -24,7 +26,7 @@ export class Inscripcion {
     @Column() gafete: string;
     @Column() telefono: string;
     @Column() jefeInmediato: string;
-    @Column() departamento: string;
+    // @Column() departamento: string;
     @Column() municipio: string;
 
     /* ------------ Relación y fecha seleccionada ------------ */
@@ -42,4 +44,9 @@ export class Inscripcion {
 
     @CreateDateColumn() createdAt: Date;
     @UpdateDateColumn() updatedAt: Date;
+
+    @ManyToOne(() => Catalogo, { eager: true })
+    @JoinColumn({ name: 'departamentoId' })
+    departamento: Catalogo;              // Catalog.tipo = DEPARTAMENTO
+    @Column() departamentoId: string;
 }

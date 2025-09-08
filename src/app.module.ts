@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { SharedModule } from './common/shared.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CatalogoModule } from './modules/catalogo/catalogo.module';
 import { ConvocatoriasModule } from './modules/convocatorias/convocatorias.module';
 import { UsersModule } from './modules/users/users.module';
 
@@ -27,6 +28,7 @@ import { UsersModule } from './modules/users/users.module';
     ConvocatoriasModule,
     SharedModule,
     AdminModule,
+    CatalogoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

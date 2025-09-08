@@ -15,7 +15,13 @@ export class ConvocatoriasService {
     ) { }
 
     async create(dto: CreateConvocatoriaDto, currentUser: User) {
-        const entity = this.repo.create({ ...dto, estado: ConvocatoriaEstado.BORRADOR, createdBy: currentUser });
+        const entity = this.repo.create({
+            ...dto,
+            estado: ConvocatoriaEstado.BORRADOR,
+            createdBy: currentUser,
+            tipo: { id: dto.tipoId },
+            modalidad: { id: dto.modalidadId }
+        });
         return this.repo.save(entity);
     }
 
